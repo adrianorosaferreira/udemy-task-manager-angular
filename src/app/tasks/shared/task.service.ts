@@ -15,7 +15,22 @@ const TASKS: Array<Task> = [
 @Injectable()
 
 export class TaskService {
-    public getTasks(): Array<Task> {
-        return TASKS;
+
+    public getTasks(): Promise<Task[]> {
+        const promise = new Promise((resolve, reject) => {
+            if (TASKS.length > 0) {
+                // Simulando um atraso na requisição para poder demonstrar que
+                // a aplicação está sendo acarregada de forma assincrona
+                setTimeout(function() {
+                    resolve(TASKS);
+                }, 3000);
+            } else {
+                const error_msg = 'Não há tarefas';
+                reject(error_msg);
+            }
+        });
+
+        return promise;
     }
+
 }
