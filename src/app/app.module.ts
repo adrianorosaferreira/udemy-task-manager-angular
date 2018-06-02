@@ -9,6 +9,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TaskDetailComponent } from './tasks/task-detail/task-detail.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { TaskService } from './tasks/shared/task.service';
+
 
 
 const ROUTES = RouterModule.forRoot([
@@ -42,7 +44,9 @@ const ROUTES = RouterModule.forRoot([
     HttpModule,
     ROUTES
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    TaskService
+  ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
