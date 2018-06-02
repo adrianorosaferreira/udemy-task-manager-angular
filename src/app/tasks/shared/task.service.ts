@@ -23,7 +23,7 @@ export class TaskService {
                 // a aplicação está sendo acarregada de forma assincrona
                 setTimeout(function() {
                     resolve(TASKS);
-                }, 3000);
+                }, 1000);
             } else {
                 const error_msg = 'Não há tarefas';
                 reject(error_msg);
@@ -32,7 +32,13 @@ export class TaskService {
 
         return promise;
     }
+
     public getImportantTasks(): Promise<Task[]> {
         return Promise.resolve(TASKS.slice(0, 3));
+    }
+
+    public getTask(id: number): Promise<Task> {
+        return this.getTasks()
+            .then((tasks) => tasks.find((task) => task.id === id));
     }
 }
