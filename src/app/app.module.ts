@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -14,6 +14,10 @@ import { TaskService } from './tasks/shared/task.service';
 
 
 const ROUTES = RouterModule.forRoot([
+  {
+    path: 'tasks/:id',
+    component: TaskDetailComponent
+  },
   {
     path: 'dashboard',
     component: DashboardComponent
