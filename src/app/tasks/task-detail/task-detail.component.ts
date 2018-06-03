@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+// Removido o Input
+// import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
 
 import 'rxjs/add/operator/switchMap';
@@ -12,8 +14,10 @@ import { TaskService } from '../shared/task.service';
 })
 
 export class TaskDetailComponent implements OnInit {
+    // Este @Input foi removido pois agora o Tesk Detail é indempendente
     // Este @Input permite que um outro component possa acessar esta propriedade
-    @Input() public task: Task;
+    // @Input() public task: Task;
+    public task: Task;
 
     public constructor(
         private taskService: TaskService,
