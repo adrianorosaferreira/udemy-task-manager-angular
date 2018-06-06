@@ -1,0 +1,31 @@
+Exemplo : PADRÃO DE PROJETO OBSERVER
+
+    CANAL (observado/observable)
+        - listaInscritos[]
+
+        - receberInscricao(inscrito)
+        - removerInscricao(inscrito)
+        - notificaInscritos(listaInscritos[])
+            inscrito.receberNotificacao(novoVideo)
+
+    INSCRITOS (observador/observer)
+        - receberNotificacao(novoVideo)
+
+====================================================
+
+Implementação do Angular (RxJs - ReactiveX JS)
+
+    OBSERVABLE
+        - subscribe(observer)
+        - unsubscribe(observer)
+        - notify
+            - observer.next(novoDado)
+            - observer.error(erro)
+            - observer.complete()
+
+    OBSERVER
+        - next(novoDado)
+        - error(erro) *
+        - complete() *
+
+         * Estes metodos podem nunca serem chamados
