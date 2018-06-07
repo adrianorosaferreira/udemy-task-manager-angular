@@ -55,12 +55,20 @@ export class TaskService {
         .map(() => task);
     }
 
-    public deleteTask(id: number): Observable<null> {
+    public delete(id: number): Observable<null> {
       const url = `${this.tasksUrl}/${id}`;
 
       return this.http.delete(url, { headers: this.headers })
         .catch(this.handleErrors)
         .map(() => null);
+    }
+
+    public searchByTitle(term: string): Observable<Task[]> {
+      const url = `${this.tasksUrl}?title=${term}`;
+
+      return this.http.get(url)
+        .catch(this.handleErrors)
+        .map((response: Response) => response.json().data as Task[]);
     }
 
     public handleErrors(error: Response) {
