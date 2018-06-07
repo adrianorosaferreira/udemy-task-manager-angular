@@ -35,6 +35,17 @@ export class TaskService {
         .map((response: Response) => response.json().data as Task);
     }
 
+    public createTask(task: Task): Observable<Task> {
+      const url = this.tasksUrl;
+      const body = JSON.stringify(task);
+      const headers = new Headers({'Content-type': 'application/json'});
+
+      return this.http.post(url, body, { headers: headers })
+        .catch(this.handleErrors)
+        .map((response: Response) => response.json().data as Task);
+
+    }
+
     public updateTask(task: Task): Observable<Task> {
       const url = `${this.tasksUrl}/${task.id}`;
       const body = JSON.stringify(task);
