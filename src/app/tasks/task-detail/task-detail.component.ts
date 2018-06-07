@@ -29,10 +29,8 @@ export class TaskDetailComponent implements OnInit {
     public ngOnInit() {
         // Sempre quando utilizo um Observable eu preciso usar um subscrib
         this.route.params
-            .switchMap((params: Params) =>
-                // o '+' converte para mumero
-                this.taskService.getTask(+params['id'])
-            )
+            // o '+' converte para mumero
+            .switchMap((params: Params) => this.taskService.getTask(+params['id']))
             .subscribe(task => this.task = task );
     }
 
