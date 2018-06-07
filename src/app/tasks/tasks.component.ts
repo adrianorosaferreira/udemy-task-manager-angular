@@ -14,21 +14,11 @@ export class TasksComponent implements OnInit {
     public constructor(private taskService: TaskService) { }
 
     public ngOnInit() {
-        // Função original
-        /* this.taskService.getTasks()
-            .then(function(tasks) {
-                console.log('Requisição efetuada com sucesso!');
-                console.log(tasks);
-                // this.tasks = tasks;
-            })
-            .catch(function(error_msg) {
-                console.log(error_msg);
-            }); */
-        // ... com Arrow functions
         this.taskService.getTasks()
-            .then((tasks) => this.tasks = tasks)
-            // Quando tem uma unica linha remova as chaves '{}'
-            .catch((error_msg) => console.log(error_msg));
+            .subscribe(
+              tasks => this.tasks = tasks,
+              error => alert('Ocorreu um erro no Servidor, tente mais tarde')
+            );
     }
 
     public onSelect(task: Task): void {
