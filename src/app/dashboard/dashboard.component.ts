@@ -8,7 +8,7 @@ import { TaskService } from '../tasks/shared/task.service';
     templateUrl: './dashboard.component.html'
 })
 
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
     public tasks: Task[];
 
     public constructor(private taskService: TaskService) {
