@@ -30,7 +30,7 @@ export class TaskDetailComponent implements OnInit {
         // Sempre quando utilizo um Observable eu preciso usar um subscrib
         this.route.params
             // o '+' converte para mumero
-            .switchMap((params: Params) => this.taskService.getTask(+params['id']))
+            .switchMap((params: Params) => this.taskService.getById(+params['id']))
             .subscribe(
               task => this.task = task,
               error => alert('Ocorreu um erro no Servidor, tente mais tarde.')
@@ -41,11 +41,11 @@ export class TaskDetailComponent implements OnInit {
         this.location.back();
     }
 
-    public updateTask() {
+    public update() {
       if (!this.task.title) {
         alert('A tarefa deve ter um título');
       } else {
-        this.taskService.updateTask(this.task)
+        this.taskService.update(this.task)
           .subscribe(
             () => alert('Tarefa atualizada com sucesso!'),
             () => alert('Ocorreu um erro no Servidor, tente mais tarde.')

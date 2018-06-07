@@ -16,20 +16,20 @@ export class TasksComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.taskService.getTasks()
+        this.taskService.getAll()
             .subscribe(
               tasks => this.tasks = tasks,
               error => alert('Ocorreu um erro no Servidor, tente mais tarde')
             );
     }
 
-    public createTask() {
+    public create() {
       this.newTask.title = this.newTask.title.trim();
 
       if (!this.newTask.title) {
         alert('A tarefa deve ter um título');
       } else {
-        this.taskService.createTask(this.newTask)
+        this.taskService.create(this.newTask)
           .subscribe(
             (task) => {
               this.tasks.push(task);
