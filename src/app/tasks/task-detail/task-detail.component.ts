@@ -31,7 +31,10 @@ export class TaskDetailComponent implements OnInit {
         this.route.params
             // o '+' converte para mumero
             .switchMap((params: Params) => this.taskService.getTask(+params['id']))
-            .subscribe(task => this.task = task );
+            .subscribe(
+              task => this.task = task,
+              error => alert('Ocorreu um erro no Servidor, tente mais tarde')
+            );
     }
 
     public goBack() {
