@@ -9,30 +9,45 @@ import { TaskService } from './shared/task.service';
 })
 export class TasksComponent implements OnInit {
     public tasks: Array<Task>;
-    public selectedTask: Task;
+    public newTask: Task;
 
-    public constructor(private taskService: TaskService) { }
-
-    public ngOnInit() {
-        // Função original
-        /* this.taskService.getTasks()
-            .then(function(tasks) {
-                console.log('Requisição efetuada com sucesso!');
-                console.log(tasks);
-                // this.tasks = tasks;
-            })
-            .catch(function(error_msg) {
-                console.log(error_msg);
-            }); */
-        // ... com Arrow functions
-        this.taskService.getTasks()
-            .then((tasks) => this.tasks = tasks)
-            // Quando tem uma unica linha remova as chaves '{}'
-            .catch((error_msg) => console.log(error_msg));
+    public constructor(private taskService: TaskService) {
+      this.newTask = new Task(null, '');
     }
 
-    public onSelect(task: Task): void {
-        this.selectedTask = task;
+    public ngOnInit() {
+        this.taskService.getAll()
+            .subscribe(
+              tasks => this.tasks = tasks,
+              error => alert('Ocorreu um erro no Servidor, tente mais tarde')
+            );
+    }
+
+    public create() {
+      this.newTask.title = this.newTask.title.trim();
+
+      if (!this.newTask.title) {
+        alert('A tarefa deve ter um título');
+      } else {
+        this.taskService.create(this.newTask)
+          .subscribe(
+            (task) => {
+              this.tasks.push(task);
+              this.newTask = new Task(null, '');
+            },
+            () => alert('Ocorreu um erro no Servidor, tente mais tarde')
+          );
+      }
+    }
+
+    public delete(task: Task) {
+      if ( confirm(`Deseja realmente excluir a tarefa "${task.title}"`) ) {
+        this.taskService.delete(task.id)
+          .subscribe(
+            () => this.tasks = this.tasks.filter( t => t !== task ),
+            () => alert('Ocorreu um erro no Servidor, tente mais tarde')
+          );
+      }
     }
 }
 

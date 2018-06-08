@@ -8,14 +8,19 @@ import { TaskService } from '../tasks/shared/task.service';
     templateUrl: './dashboard.component.html'
 })
 
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
     public tasks: Task[];
 
     public constructor(private taskService: TaskService) {
     }
 
     ngOnInit(): void {
-        this.taskService.getImportantTasks()
-            .then((tasks) => this.tasks = tasks);
+        this.taskService.getImportant()
+            .subscribe(
+              tasks => this.tasks = tasks,
+              error => alert('Ocorreu um erro no Servidor, tente mais tarde')
+            );
+
+
     }
 }

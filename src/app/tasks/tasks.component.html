@@ -1,12 +1,23 @@
 <h1 class="page-header">Lista de Tarefas</h1>
 
+<div class="well">
+    <div class="row">
+        <div class="col-md-10">
+            <input type="text" class="form-control" [(ngModel)]="newTask.title" placeholder="Digite aqui uma nova tarefa">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success" (click)="create()">Adicionar Tarefa</button>
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <thead>
-    <tr>       
-        <th>ID</th>
-        <th>Título</th>
-        <th>Ações</th>
-    </tr>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Ações</th>
+        </tr>
     </thead>
     <tbody>
         <tr *ngFor="let task of tasks">
@@ -15,12 +26,11 @@
             <td>
                 <!-- Removido o acesso do task Detail via modal -->
                 <!-- <button class="btn btn-info" data-toggle="modal" data-target="#taskDetailModal" (click)="onSelect(task)"> -->
-                <a  [routerLink]="['/tasks', task.id]" class="btn btn-info">
-                    <span class="glyphicon glyphicon-info-sign"></span>  
-                    Detalhes
+                <a [routerLink]="['/tasks', task.id]" class="btn btn-info">
+                    <span class="glyphicon glyphicon-info-sign"></span> Detalhes
                 </a>
-                <button class="btn btn-danger">
-                    <span class="glyphicon glyphicon-trash"></span>  
+                <button class="btn btn-danger" (click)="delete(task)">
+                    <span class="glyphicon glyphicon-trash"></span>
                     Excluir
                 </button>
             </td>

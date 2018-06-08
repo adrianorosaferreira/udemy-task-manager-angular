@@ -4,8 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
 import { Location } from '@angular/common';
 
-import 'rxjs/add/operator/switchMap';
-
 import { Task } from '../shared/task.model';
 import { TaskService } from '../shared/task.service';
 
@@ -29,14 +27,28 @@ export class TaskDetailComponent implements OnInit {
     public ngOnInit() {
         // Sempre quando utilizo um Observable eu preciso usar um subscrib
         this.route.params
-            .switchMap((params: Params) =>
-                // o '+' converte para mumero
-                this.taskService.getTask(+params['id'])
-            )
-            .subscribe(task => this.task = task );
+            // o '+' converte para mumero
+            .switchMap((params: Params) => this.taskService.getById(+params['id']))
+            .subscribe(
+              task => this.task = task,
+              error => alert('Ocorreu um erro no Servidor, tente mais tarde.')
+            );
     }
 
     public goBack() {
         this.location.back();
+    }
+
+    public update() {
+      if (!this.task.title) {
+        alert('A tarefa deve ter um título');
+      } else {
+        this.taskService.update(this.task)
+          .subscribe(
+            () => alert('Tarefa atualizada com sucesso!'),
+            () => alert('Ocorreu um erro no Servidor, tente mais tarde.')
+          );
+      }
+
     }
 }

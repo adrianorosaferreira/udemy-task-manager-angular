@@ -1,46 +1,77 @@
-import { Http } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 
-import { Task } from './task.model';
+import { Observable } from 'rxjs/Observable';
 
-const TASKS: Array<Task> = [
-  { id: 1, title: 'Fazer tarefa 1' },
-  { id: 2, title: 'Fazer tarefa 2' },
-  { id: 3, title: 'Fazer tarefa 3' },
-  { id: 4, title: 'Fazer tarefa 4' },
-  { id: 5, title: 'Fazer tarefa 5' },
-  { id: 6, title: 'Fazer tarefa 6' },
-  { id: 7, title: 'Fazer tarefa 7' }
-];
+import { Task } from './task.model';
 
 @Injectable()
 
 export class TaskService {
+    public tasksUrl = 'api/tasks';
+    public headers = new Headers({'Content-type': 'application/json'});
+
     public constructor(private http: Http) {}
 
-    public getTasks(): Promise<Task[]> {
-      const promise = new Promise((resolve, reject) => {
-          if (TASKS.length > 0) {
-            // Simulando um atraso na requisição para poder demonstrar que
-            // a aplicação está sendo acarregada de forma assincrona
-            setTimeout(function() {
-              resolve(TASKS);
-            }, 1000);
-          } else {
-            const error_msg = 'Não há tarefas';
-            reject(error_msg);
-          }
-      });
-
-      return promise;
+    public getAll(): Observable<Task[]> {
+      return this.http.get(this.tasksUrl)
+        .catch(this.handleErrors)
+        .map((response: Response) => response.json().data as Task[]);
     }
 
-    public getImportantTasks(): Promise<Task[]> {
-      return Promise.resolve(TASKS.slice(0, 3));
+    public getImportant(): Observable<Task[]> {
+      return this.getAll()
+        .catch(this.handleErrors)
+        .map(tasks => tasks.slice(0, 3));
     }
 
-    public getTask(id: number): Promise<Task> {
-      return this.getTasks()
-        .then((tasks) => tasks.find((task) => task.id === id));
+    public getById(id: number): Observable<Task> {
+      const url = `${this.tasksUrl}/${id}`;
+
+      return this.http.get(url)
+        .catch(this.handleErrors)
+        .map((response: Response) => response.json().data as Task);
     }
+
+    public create(task: Task): Observable<Task> {
+      const url = this.tasksUrl;
+      const body = JSON.stringify(task);
+
+      return this.http.post(url, body, { headers: this.headers })
+        .catch(this.handleErrors)
+        .map((response: Response) => response.json().data as Task);
+
+    }
+
+    public update(task: Task): Observable<Task> {
+      const url = `${this.tasksUrl}/${task.id}`;
+      const body = JSON.stringify(task);
+
+      return this.http.put(url, body, { headers: this.headers })
+        .catch(this.handleErrors)
+        .map(() => task);
+    }
+
+    public delete(id: number): Observable<null> {
+      const url = `${this.tasksUrl}/${id}`;
+
+      return this.http.delete(url, { headers: this.headers })
+        .catch(this.handleErrors)
+        .map(() => null);
+    }
+
+    public searchByTitle(term: string): Observable<Task[]> {
+      const url = `${this.tasksUrl}?title=${term}`;
+
+      return this.http.get(url)
+        .catch(this.handleErrors)
+        .map((response: Response) => response.json().data as Task[]);
+    }
+
+    public handleErrors(error: Response) {
+      console.log('Salvando o erro em um arquivo de log - detalhes do erro => ', error);
+      return Observable.throw(error);
+    }
+
+
 }

@@ -7,16 +7,16 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 export class InMemoryTaskDataService implements InMemoryDbService {
 
     public createDb() {
-        const task = [
-            { id: 1, title: 'Fazer tarefa 1' },
-            { id: 2, title: 'Fazer tarefa 2' },
-            { id: 3, title: 'Fazer tarefa 3' },
-            { id: 4, title: 'Fazer tarefa 4' },
-            { id: 5, title: 'Fazer tarefa 5' },
-            { id: 6, title: 'Fazer tarefa 6' },
-            { id: 7, title: 'Fazer tarefa 7' }
+        const tasks = [
+            { id: 1, title: 'Comprar um celular novo' },
+            { id: 2, title: 'Pagar boleto' },
+            { id: 3, title: 'Pagar internet' },
+            { id: 4, title: 'Assitir aula sobre Rails' },
+            { id: 5, title: 'Assitir aula sobre Angular' },
+            { id: 6, title: 'Comprar Pizza' },
+            { id: 7, title: 'Pagar Aluguel' }
         ];
 
-        return { task };
+        return { tasks };
     }
 }
