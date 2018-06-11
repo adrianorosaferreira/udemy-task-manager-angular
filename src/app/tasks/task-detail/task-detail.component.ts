@@ -17,6 +17,10 @@ export class TaskDetailComponent implements OnInit {
     // Este @Input permite que um outro component possa acessar esta propriedade
     // @Input() public task: Task;
     public task: Task;
+    public taskDoneOptions: Array<any> = [
+      { value: false, text: 'Pendente'},
+      { value: true, text: 'Feita'}
+    ];
 
     public constructor(
         private taskService: TaskService,
