@@ -53,6 +53,9 @@ export class TaskDetailComponent implements OnInit {
             () => alert('Ocorreu um erro no Servidor, tente mais tarde.')
           );
       }
+    }
 
+    public showFieldError(field): boolean {
+        return field.invalid && (field.touched || field.dirty);
     }
 }
