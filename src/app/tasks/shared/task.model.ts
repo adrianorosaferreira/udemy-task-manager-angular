@@ -4,5 +4,6 @@ export class Task {
       public title: string,
       public description?: string,
       public done?: boolean,
-      public deadline?: string) { }
+      public deadline?: string
+      ) { }
   }

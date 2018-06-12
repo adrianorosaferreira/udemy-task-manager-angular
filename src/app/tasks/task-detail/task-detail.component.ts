@@ -18,8 +18,8 @@ export class TaskDetailComponent implements OnInit {
     // @Input() public task: Task;
     public task: Task;
     public taskDoneOptions: Array<any> = [
-        {value: false, text: 'Pendente'},
-        {value: true, text: 'Feita'}
+      { value: false, text: 'Pendente'},
+      { value: true, text: 'Feita'}
     ];
 
     public constructor(

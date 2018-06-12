@@ -1,10 +1,22 @@
 <h1 class="page-header">Detalhes da Tarefa: {{ task?.title }}</h1>
 
-<form #taskForm="ngForm" *ngIf="task">
+<form #taskForm="ngForm" *ngIf=task>
+
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 has-feeedback" [class.has-error]="title.invalid && title.touched" [class.has-success]="title.valid">
             <label for="title" class="control-label">Título</label>
-            <input [(ngModel)]="task.title" type="text" class="form-control" name="title" id="title">
+            <input #title="ngModel" [(ngModel)]="task.title" type="text" class="form-control" name="title" id="title" required>
+            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="title.valid" [class.glyphicon-remove]="title.invalid && title.touched" style="margin-right: 20px"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="deadline" class="control-label">Prazo de Entrega</label>
+            <input [(ngModel)]="task.deadline" type="text" class="form-control" name="deadline" id="deadline">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="done" class="control-label">Situação</label>
+            <select [(ngModel)]="task.done" type="text" class="form-control" name="done" id="done">
+              <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
+            </select>
         </div>
         <div class="form-group col-md-3">
             <label for="deadline" class="control-label">Prazo de Entrega</label>
@@ -19,7 +31,7 @@
     </div>
     <div class="row">
         <div class="form-group col-md-12">
-            <label for="description" class="control-label">Descrição detalhada</label>
+            <label for="description" class="control-label">Descrição detalahada</label>
             <textarea [(ngModel)]="task.description" class="form-control" name="description" id="description" rows="4"></textarea>
         </div>
     </div>
@@ -28,5 +40,5 @@
 
     <hr>
 
-    <pre>{{ task | json }}</pre>
+    <pre>{{ title.valid }}</pre>
 </form>
