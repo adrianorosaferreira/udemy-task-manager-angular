@@ -1,6 +1,6 @@
 // Removido o Input
 // import { Component, Input, OnInit } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -12,7 +12,7 @@ import { TaskService } from '../shared/task.service';
     templateUrl: './task-detail.component.html'
 })
 
-export class TaskDetailComponent implements OnInit {
+export class TaskDetailComponent implements OnInit, AfterViewInit {
     // Este @Input foi removido pois agora o Tesk Detail é indempendente
     // Este @Input permite que um outro component possa acessar esta propriedade
     // @Input() public task: Task;
@@ -37,6 +37,9 @@ export class TaskDetailComponent implements OnInit {
               task => this.task = task,
               error => alert('Ocorreu um erro no Servidor, tente mais tarde.')
             );
+    }
+
+    public ngAfterViewInit() {
     }
 
     public goBack() {
