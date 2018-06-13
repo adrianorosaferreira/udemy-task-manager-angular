@@ -29,17 +29,22 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     ) {}
 
     public ngOnInit() {
-        // Sempre quando utilizo um Observable eu preciso usar um subscrib
-        this.route.params
-            // o '+' converte para mumero
-            .switchMap((params: Params) => this.taskService.getById(+params['id']))
-            .subscribe(
-              task => this.task = task,
-              error => alert('Ocorreu um erro no Servidor, tente mais tarde.')
-            );
+      this.task = new Task(null, null);
+      // Sempre quando utilizo um Observable eu preciso usar um subscrib
+      this.route.params
+          // o '+' converte para mumero
+          .switchMap((params: Params) => this.taskService.getById(+params['id']))
+          .subscribe(
+            task => this.task = task,
+            error => alert('Ocorreu um erro no Servidor, tente mais tarde.')
+          );
     }
 
     public ngAfterViewInit() {
+      $('#deadline').datetimepicker({
+        'sideBySide': true,
+        'locale': 'pt-br'
+      }).on('dp.change', () => this.task.deadline = $('#deadline').val());
     }
 
     public goBack() {
