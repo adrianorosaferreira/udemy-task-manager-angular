@@ -1,6 +1,6 @@
 <h1 class="page-header">Detalhes da Tarefa: {{ task.title }}</h1>
 
-<form #taskForm="ngForm">
+<form #taskForm="ngForm" (ngSubmit)="update()">
 
     <div class="row">
         <div class="form-group col-md-6 has-feedback" [class.has-error]="showFieldError(title)" [class.has-success]="title.valid">
@@ -34,8 +34,9 @@
             <textarea [(ngModel)]="task.description" class="form-control" name="description" id="description" rows="4"></textarea>
         </div>
     </div>
+    <button [disabled]="taskForm.invalid" type="submit" class="btn btn-success">Atualizar</button>
     <button class="btn btn-default" (click)="goBack()">Voltar</button>
-    <button [disabled]="taskForm.invalid" type="submit" class="btn btn-success" (click)="update()">Atualizar</button>
+
 
     <hr>
 
