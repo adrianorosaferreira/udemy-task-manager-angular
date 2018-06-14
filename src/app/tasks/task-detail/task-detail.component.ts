@@ -44,16 +44,42 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
           // o '+' converte para mumero
           .switchMap((params: Params) => this.taskService.getById(+params['id']))
           .subscribe(
-            task => this.task = task,
+            task => this.setTask(task),
             error => alert('Ocorreu um erro no Servidor, tente mais tarde.')
           );
+    }
+
+    public setTask(task: Task): void {
+      this.task = task;
+      this.reactiveTaskForm.patchValue(task);
+      // Duas formas de popular dados no html
+      // setValue = Todos os dados passados tem que ser do formModel 
+      //            e não pode faltar nenhum
+/*       let formModel = {
+        title: task.title || null,
+        description: task.description || null,
+        done: task.done || null,
+        deadline: task.deadline || null
+      };
+
+      this.reactiveTaskForm.setValue(formModel); */
+
+      // patchValue = não precisar passar todos os campos do formModel
+      //              e não precisa ser exatamente um campo existente do formModel
+/*       let formModel = {
+        title: task.title || null,
+        description: task.description || null,
+        nameQualquer: 'nome qualquer'
+      };
+      this.reactiveTaskForm.patchValue(formModel); */
+    
     }
 
     public ngAfterViewInit() {
       $('#deadline').datetimepicker({
         'sideBySide': true,
         'locale': 'pt-br'
-      }).on('dp.change', () => this.task.deadline = $('#deadline').val());
+      }).on('dp.change', () => this.reactiveTaskForm.get('deadline').setValue($('#deadline').val()));
     }
 
     public goBack() {
