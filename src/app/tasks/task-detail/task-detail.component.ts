@@ -54,7 +54,10 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     public update() {
       this.taskService.update(this.task)
         .subscribe(
-          () => alert('Tarefa atualizada com sucesso!'),
+          () => {
+            alert('Tarefa atualizada com sucesso!')
+            this.goBack();
+          },
           () => alert('Ocorreu um erro no Servidor, tente mais tarde.')
         );
     }
