@@ -1,6 +1,33 @@
 <h1 class="page-header">Detalhes da Tarefa: {{ task.title }}</h1>
 
-<form #taskForm="ngForm" (ngSubmit)="update()">
+<form [formGroup]="reactiveTaskForm">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="title" class="control-label">Título</label>
+            <input type="text" class="form-control" id="title" formControlName="title">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="deadline" class="control-label">Prazo</label>
+            <input type="text" class="form-control" id="deadline" formControlName="deadline">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="done" class="control-label">Situação</label>
+            <select class="form-control" id="done" formControlName="done">
+                <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label for="description" class="control-label">Descrição</label>
+            <textarea class="form-control" id="description" formControlName="description" rows="4"></textarea>
+        </div>
+    </div>
+
+    <pre>{{ reactiveTaskForm.value | json }}</pre>
+</form>
+
+<!-- <form #taskForm="ngForm" (ngSubmit)="update()">
 
     <div class="row">
         <div class="form-group col-md-6 has-feedback" [class.has-error]="showFieldError(title)" [class.has-success]="title.valid">
@@ -45,4 +72,4 @@
 
 <pre id="exemplo">
     testettetstetste
-</pre>
+</pre> -->

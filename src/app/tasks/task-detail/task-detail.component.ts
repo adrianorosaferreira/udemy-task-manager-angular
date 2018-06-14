@@ -3,6 +3,7 @@
 import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
 import { Location } from '@angular/common';
+import { FormGroup, FormControl } from '@angular/forms';
 
 import { Task } from '../shared/task.model';
 import { TaskService } from '../shared/task.service';
@@ -13,6 +14,7 @@ import { TaskService } from '../shared/task.service';
 })
 
 export class TaskDetailComponent implements OnInit, AfterViewInit {
+    public reactiveTaskForm: FormGroup;
     // Este @Input foi removido pois agora o Tesk Detail é indempendente
     // Este @Input permite que um outro component possa acessar esta propriedade
     // @Input() public task: Task;
@@ -26,7 +28,14 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
         private taskService: TaskService,
         private route: ActivatedRoute,
         private location: Location
-    ) {}
+    ) {
+      this.reactiveTaskForm = new FormGroup({
+        title: new FormControl(null),
+        deadline: new FormControl(null),
+        done: new FormControl(null),
+        description: new FormControl(null)
+      });
+    }
 
     public ngOnInit() {
       this.task = new Task(null, null);
