@@ -3,7 +3,7 @@
 import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
 import { Location } from '@angular/common';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { Task } from '../shared/task.model';
 import { TaskService } from '../shared/task.service';
@@ -31,14 +31,12 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
         private formBuilder: FormBuilder
     ) {
       this.reactiveTaskForm = this.formBuilder.group({
-        title: [null],
-        deadline: [null],
-        done: [null],
-        description: [null],
-        user: this.formBuilder.group({
-          name: ['Adriano Ferreira'],
-          email: ['adrianorosaferreira@gmail.com']
-        })
+        title: [null, [ Validators.required,
+                        Validators.minLength(2),
+                        Validators.maxLength(50)]],
+        deadline: [null, Validators.required],
+        done: [null, Validators.required],
+        description: [null]
       });
     }
 
@@ -95,7 +93,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
       this.taskService.update(this.task)
         .subscribe(
           () => {
-            alert('Tarefa atualizada com sucesso!')
+            alert('Tarefa atualizada com sucesso!');
             this.goBack();
           },
           () => alert('Ocorreu um erro no Servidor, tente mais tarde.')
