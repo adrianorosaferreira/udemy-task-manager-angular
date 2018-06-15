@@ -27,14 +27,18 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     public constructor(
         private taskService: TaskService,
         private route: ActivatedRoute,
-        private location: Location, 
+        private location: Location,
         private formBuilder: FormBuilder
     ) {
       this.reactiveTaskForm = this.formBuilder.group({
         title: [null],
         deadline: [null],
         done: [null],
-        description: [null]
+        description: [null],
+        user: this.formBuilder.group({
+          name: ['Adriano Ferreira'],
+          email: ['adrianorosaferreira@gmail.com']
+        })
       });
     }
 
@@ -54,7 +58,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
       this.task = task;
       this.reactiveTaskForm.patchValue(task);
       // Duas formas de popular dados no html
-      // setValue = Todos os dados passados tem que ser do formModel 
+      // setValue = Todos os dados passados tem que ser do formModel
       //            e não pode faltar nenhum
 /*       let formModel = {
         title: task.title || null,
@@ -73,7 +77,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
         nameQualquer: 'nome qualquer'
       };
       this.reactiveTaskForm.patchValue(formModel); */
-    
+
     }
 
     public ngAfterViewInit() {
