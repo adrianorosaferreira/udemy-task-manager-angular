@@ -2,7 +2,7 @@
 
 <form [formGroup]="reactiveTaskForm" (ngSubmit)="update()">
     <div class="row">
-        <div class="form-group col-md-6 has-feedback" [class.has-error]="showFieldError(reactiveTaskForm.get('title'))" [class.has-success]="reactiveTaskForm.get('title').valid">
+        <div class="form-group col-md-6 has-feedback" [ngClass]="fieldClassForErrorOrSuccess('title')">
             <label for="title" class="control-label">Título</label>
             <input type="text" class="form-control" id="title" formControlName="title">
             <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="reactiveTaskForm.get('title').valid" [class.glyphicon-remove]="showFieldError(reactiveTaskForm.get('title'))" style="margin-right:20px"></span>

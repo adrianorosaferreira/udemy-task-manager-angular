@@ -19,10 +19,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     // Este @Input permite que um outro component possa acessar esta propriedade
     // @Input() public task: Task;
     public task: Task;
-    public taskDoneOptions: Array<any> = [
-      { value: false, text: 'Pendente'},
-      { value: true, text: 'Feita'}
-    ];
+    public taskDoneOptions: Array<any>;
 
     public constructor(
         private taskService: TaskService,
@@ -30,6 +27,10 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
         private location: Location,
         private formBuilder: FormBuilder
     ) {
+      this.taskDoneOptions = [
+        { value: false, text: 'Pendente'},
+        { value: true, text: 'Feita'}
+      ];
       this.reactiveTaskForm = this.formBuilder.group({
         title: [null, [ Validators.required,
                         Validators.minLength(2),
@@ -39,6 +40,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
         description: [null]
       });
     }
+
 
     public ngOnInit() {
       this.task = new Task(null, null);
@@ -52,31 +54,12 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
           );
     }
 
+
     public setTask(task: Task): void {
       this.task = task;
       this.reactiveTaskForm.patchValue(task);
-      // Duas formas de popular dados no html
-      // setValue = Todos os dados passados tem que ser do formModel
-      //            e não pode faltar nenhum
-/*       let formModel = {
-        title: task.title || null,
-        description: task.description || null,
-        done: task.done || null,
-        deadline: task.deadline || null
-      };
-
-      this.reactiveTaskForm.setValue(formModel); */
-
-      // patchValue = não precisar passar todos os campos do formModel
-      //              e não precisa ser exatamente um campo existente do formModel
-/*       let formModel = {
-        title: task.title || null,
-        description: task.description || null,
-        nameQualquer: 'nome qualquer'
-      };
-      this.reactiveTaskForm.patchValue(formModel); */
-
     }
+
 
     public ngAfterViewInit() {
       $('#deadline').datetimepicker({
@@ -85,9 +68,11 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
       }).on('dp.change', () => this.reactiveTaskForm.get('deadline').setValue($('#deadline').val()));
     }
 
+
     public goBack() {
         this.location.back();
     }
+
 
     public update() {
       this.task.title = this.reactiveTaskForm.get('title').value;
@@ -105,6 +90,13 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
         );
     }
 
+    // Forms errors methods
+    public fieldClassForErrorOrSuccess(fieldName: string) {
+      return {
+        'has-error' : this.showFieldError(this.reactiveTaskForm.get('title')),
+        'has-success' : this.reactiveTaskForm.get('title').valid
+      };
+    }
     public showFieldError(field): boolean {
       return field.invalid && (field.touched || field.dirty);
     }
