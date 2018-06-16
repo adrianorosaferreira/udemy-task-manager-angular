@@ -85,7 +85,6 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
           () => alert('Ocorreu um erro no Servidor, tente mais tarde.')
         );
     }
-
     // Forms errors methods
     public fieldClassForErrorOrSuccess(fieldName: string) {
       return {
