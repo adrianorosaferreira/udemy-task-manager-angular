@@ -98,11 +98,11 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
       return {
         'glyphicon-ok': this.getField(fieldName).valid,
         'glyphicon-remove': this.showFieldError(fieldName)
-      }
+      };
     }
 
     public showFieldError(fieldName: string): boolean {
-      let field = this.getField(fieldName);
+      const field = this.getField(fieldName);
       return field.invalid && (field.touched || field.dirty);
     }
 
