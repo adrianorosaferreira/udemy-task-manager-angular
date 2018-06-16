@@ -11,7 +11,7 @@ import { TaskService } from '../shared/task.service';
 @Component({
     selector: 'task-detail',
     templateUrl: './task-detail.component.html',
-    styles: ['.form-control-feedback{ margin-right:20px }']
+    styles: [' .form-control-feedback{ margin-right: 20px } ']
 })
 
 export class TaskDetailComponent implements OnInit, AfterViewInit {
