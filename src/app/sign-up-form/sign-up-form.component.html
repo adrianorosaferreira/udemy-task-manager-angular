@@ -47,6 +47,7 @@
                 <span class="glyphicon form-control-feedback" [ngClass]="formUtils.iconClassErroOrSuccess('passwordConfirmation')" ></span>
                 <div *ngIf="formUtils.showFieldError('passwordConfirmation')" class="text-danger">
                     <div *ngIf="form.get('passwordConfirmation').errors.required">A confirmação de senha é obrigatório</div>
+                    <div *ngIf="form.get('passwordConfirmation').errors.mismatch">A senha e aconfirmação de senha não estão combinando</div>
                 </div>
             </div>
         </div>
