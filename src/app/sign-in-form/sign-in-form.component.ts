@@ -20,7 +20,7 @@ export class SignInFormComponent {
         this.formUtils = new FormUtils(this.form);
     }
 
-    public sigInUser() {
+    public signInUser() {
         console.log('Formulário de SignIn enviado');
         console.log(this.form.value);
 
