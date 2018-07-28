@@ -8,10 +8,10 @@ import { TasksComponent } from './tasks/tasks.component';
 import { TaskDetailComponent } from './tasks/task-detail/task-detail.component';
 
 const ROUTES = RouterModule.forRoot([
+  { path: 'sign-in', component: SignInFormComponent },
+  { path: 'sign-up', component: SignUpFormComponent },
   { path: 'tasks/:id', component: TaskDetailComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'sign-up', component: SignUpFormComponent },
-  { path: 'sign-in', component: SignInFormComponent },
   { path: 'tasks', component: TasksComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
 ]);
