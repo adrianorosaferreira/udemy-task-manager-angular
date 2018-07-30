@@ -1,35 +1,35 @@
 <h1 class="page-header">Detalhes da Tarefa: {{ task.title }}</h1>
 
-<form [formGroup]="reactiveTaskForm" (ngSubmit)="update()">
+<form [formGroup]="form" (ngSubmit)="update()">
     <div class="row">
         <!-- taskTitle -->
-        <div class="form-group col-md-6 has-feedback" [ngClass]="fieldClassForErrorOrSuccess('title')">
+        <div class="form-group col-md-6 has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('title')">
             <label for="title" class="control-label">Título</label>
             <input type="text" class="form-control" id="title" formControlName="title">
-            <span class="glyphicon form-control-feedback" [ngClass]="iconClassErroOrSuccess('title')" ></span>
-            <div *ngIf="showFieldError('title')" class="text-danger">
-                <div *ngIf="getField('title').errors.required">O título é obrigatório</div>
-                <div *ngIf="getField('title').errors.minlength">O título deve ter no minimo {{ getField('title').errors.minlength.requiredLength }} caracteres</div>
-                <div *ngIf="getField('title').errors.maxlength">O título deve ter no máximo {{ getField('title').errors.maxlength.requiredLength }} caracteres</div>
+            <span class="glyphicon form-control-feedback" [ngClass]="formUtils.iconClassErroOrSuccess('title')" ></span>
+            <div *ngIf="formUtils.showFieldError('title')" class="text-danger">
+                <div *ngIf="form.get('title').errors.required">O título é obrigatório</div>
+                <div *ngIf="form.get('title').errors.minlength">O título deve ter no minimo {{ form.get('title').errors.minlength.requiredLength }} caracteres</div>
+                <div *ngIf="form.get('title').errors.maxlength">O título deve ter no máximo {{ form.get('title').errors.maxlength.requiredLength }} caracteres</div>
             </div>
         </div>
 
         <!-- taskDeadline -->
-        <div class="form-group col-md-3 has-feedback" [ngClass]="fieldClassForErrorOrSuccess('deadline')">
+        <div class="form-group col-md-3 has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('deadline')">
             <label for="deadline" class="control-label">Prazo</label>
             <input type="text" class="form-control" id="deadline" formControlName="deadline">
-            <span class="glyphicon form-control-feedback" [ngClass]="iconClassErroOrSuccess('deadline')"></span>
-            <div *ngIf="showFieldError('deadline')" class="text-danger">O prazo é obrigatório</div>
+            <span class="glyphicon form-control-feedback" [ngClass]="formUtils.iconClassErroOrSuccess('deadline')"></span>
+            <div *ngIf="formUtils.showFieldError('deadline')" class="text-danger">O prazo é obrigatório</div>
         </div>
 
         <!-- taskDone -->
-        <div class="form-group col-md-3 has-feedback" [ngClass]="fieldClassForErrorOrSuccess('done')">
+        <div class="form-group col-md-3 has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('done')">
             <label for="done" class="control-label">Situação</label>
             <select class="form-control" id="done" formControlName="done">
                 <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
             </select>
-            <span class="glyphicon form-control-feedback" [ngClass]="iconClassErroOrSuccess('done')"></span>
-            <div *ngIf="showFieldError('done')" class="text-danger">A situação é obrigatório</div>
+            <span class="glyphicon form-control-feedback" [ngClass]="formUtils.iconClassErroOrSuccess('done')"></span>
+            <div *ngIf="formUtils.showFieldError('done')" class="text-danger">A situação é obrigatório</div>
         </div>
     </div>
 
@@ -41,9 +41,9 @@
         </div>
     </div>
 
-    <button [disabled]="reactiveTaskForm.invalid" type="submit" class="btn btn-success">Atualizar</button>
+    <button [disabled]="form.invalid" type="submit" class="btn btn-success">Atualizar</button>
     <button class="btn btn-default" type="button" (click)="goBack()">Voltar</button>
 
-    <pre>{{ reactiveTaskForm.value | json }}</pre>
-    <pre>{{ getField('title').errors | json }}</pre>
+    <pre>{{ form.value | json }}</pre>
+    <pre>{{ form.get('title').errors | json }}</pre>
 </form>
