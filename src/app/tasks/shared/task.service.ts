@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Angular2TokenService } from 'angular2-token';
+import { TokenService } from '../../shared/token.service';
 import { Task } from './task.model';
 
 @Injectable()
@@ -11,10 +11,10 @@ import { Task } from './task.model';
 export class TaskService {
     public tasksUrl = 'tasks';
 
-    public constructor(private tokenHttp: Angular2TokenService) {}
+    public constructor(private tokenHttp: TokenService) {}
 
     public getAll(): Observable<Task[]> {
-      let url = `${this.tasksUrl}?q[s]=updated_at+DESC`;
+      const url = `${this.tasksUrl}?q[s]=updated_at+DESC`;
 
       return this.tokenHttp.get(url)
         .catch(this.handleErrors)
@@ -22,7 +22,7 @@ export class TaskService {
     }
 
     public getImportant(): Observable<Task[]> {
-      let url = `${this.tasksUrl}?q[s]=deadline+ASC`;
+      const url = `${this.tasksUrl}?q[s]=deadline+ASC`;
 
       return this.tokenHttp.get(url)
         .catch(this.handleErrors)
@@ -30,7 +30,7 @@ export class TaskService {
     }
 
     public getById(id: number): Observable<Task> {
-      let url = `${this.tasksUrl}/${id}`;
+      const url = `${this.tasksUrl}/${id}`;
 
       return this.tokenHttp.get(url)
         .catch(this.handleErrors)
@@ -65,7 +65,7 @@ export class TaskService {
     }
 
     public searchByTitle(term: string): Observable<Task[]> {
-      let url = `${this.tasksUrl}?q[title_cont]=${term}`;
+      const url = `${this.tasksUrl}?q[title_cont]=${term}`;
 
       return this.tokenHttp.get(url)
         .catch(this.handleErrors)
@@ -78,11 +78,11 @@ export class TaskService {
     }
 
     private responseToTasks(response: Response): Task[] {
-      let collection = response.json().data as Array<any>;
+      const collection = response.json().data as Array<any>;
       let tasks: Task[] = [];
 
       collection.forEach(item => {
-        let task = new Task(
+        const task = new Task(
           item.id,
           item.attributes.title,
           item.attributes.description,
@@ -101,7 +101,7 @@ export class TaskService {
         response.json().data.id,
         response.json().data.attributes.title,
         response.json().data.attributes.description,
-        response.json().data.attributes.tidonetle,
+        response.json().data.attributes.done,
         response.json().data.attributes['deadline-to-br']
       );
     }
